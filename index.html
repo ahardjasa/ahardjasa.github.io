@@ -136,7 +136,19 @@
                         position: path[i],
                         map: map,
                         title: "Temple " + i,
-                        label: String(i)
+
+                        label: {
+                            text: String(i),
+                            color: "white",
+                            fontWeight: "bold",
+                            fontSize: "14px"
+                        },
+                        icon: {
+                            url: "https://henro92ab.blob.core.windows.net/storage/monk2.svg",
+                            anchor: new google.maps.Point(15, 15),
+                            labelOrigin: new google.maps.Point(15, 20),
+                            
+                        }
 
                     });
                 }
@@ -193,7 +205,6 @@
                                 map: gMap,
                                 title: "Amelia " + i,
                                 label: String(i)
-
                             });
 
                         }
@@ -217,4 +228,6 @@
         </script>
         
     </div>
+    <div style="text-align:center;font-weight:bold">Credits</div>
+    <div style="text-align:center">monk by Hea Poh Lin from the Noun Project</div>
 </body>
