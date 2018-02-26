@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Showing elevation along a path</title>
+    <title>Amelia's Shikoku Henro Log</title>
     <style>
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
@@ -32,96 +32,96 @@
 
             function initMap() {
                 var path = [
-                    { lat: 34.159444, lng: 134.503 },
-                    { lat: 34.156028, lng: 134.49025000000006 },
-                    { lat: 34.147278, lng: 134.46827800000005 },
-                    { lat: 34.1515, lng: 134.43116699999996 },
-                    { lat: 34.137167, lng: 134.43236100000001 },
-                    { lat: 34.118111, lng: 134.38836100000003 },
-                    { lat: 34.120444, lng: 134.37830600000007 },
-                    { lat: 34.122889, lng: 134.340056 },
-                    { lat: 34.104222, lng: 134.33341700000005 },
-                    { lat: 34.10752800000001, lng: 134.30405599999995 },
-                    { lat: 34.0515, lng: 134.348528 },
-                    { lat: 33.984972, lng: 134.31063900000004 },
-                    { lat: 34.038222, lng: 134.462806 },
-                    { lat: 34.050333, lng: 134.47566699999993 },
-                    { lat: 34.055778, lng: 134.473333 },
-                    { lat: 34.068528, lng: 134.47422200000005 },
-                    { lat: 34.085194, lng: 134.485528 },
-                    { lat: 33.986, lng: 134.57799999999997 },
-                    { lat: 33.967944, lng: 134.60649999999998 },
-                    { lat: 33.913806, lng: 134.505444 },
-                    { lat: 33.881861, lng: 134.520583 },
-                    { lat: 33.852194, lng: 134.58233300000006 },
-                    { lat: 33.732444, lng: 134.527472 },
-                    { lat: 33.24925, lng: 134.17591700000003 },
-                    { lat: 33.28825, lng: 134.14847199999997 },
-                    { lat: 33.30725, lng: 134.12258299999996 },
-                    { lat: 33.467639, lng: 133.97472200000004 },
-                    { lat: 33.577778, lng: 133.705556 },
-                    { lat: 33.598889, lng: 133.64027799999997 },
-                    { lat: 33.591944, lng: 133.57788900000003 },
-                    { lat: 33.546639, lng: 133.57747199999994 },
-                    { lat: 33.526694, lng: 133.61169399999994 },
-                    { lat: 33.500833, lng: 133.54305599999998 },
-                    { lat: 33.492056, lng: 133.48769400000003 },
-                    { lat: 33.512556, lng: 133.409361 },
-                    { lat: 33.426056, lng: 133.45108300000004 },
-                    { lat: 33.208111, lng: 133.13466700000004 },
-                    { lat: 32.726306, lng: 133.01850000000002 },
-                    { lat: 32.961194, lng: 132.774222 },
-                    { lat: 32.964639, lng: 132.564167 },
-                    { lat: 33.295222, lng: 132.59822199999996 },
-                    { lat: 33.310278, lng: 132.58219399999996 },
-                    { lat: 33.369083, lng: 132.51902799999993 },
-                    { lat: 33.661028, lng: 132.911583 },
-                    { lat: 33.659028, lng: 132.98125000000005 },
-                    { lat: 33.753556, lng: 132.81886099999997 },
-                    { lat: 33.758056, lng: 132.81302800000003 },
-                    { lat: 33.793611, lng: 132.813667 },
-                    { lat: 33.816806, lng: 132.80791699999997 },
-                    { lat: 33.827778, lng: 132.805028 },
-                    { lat: 33.847889, lng: 132.796472 },
-                    { lat: 33.885028, lng: 132.71502799999996 },
-                    { lat: 33.891778, lng: 132.739694 },
-                    { lat: 34.066833, lng: 132.96402799999998 },
-                    { lat: 34.06825, lng: 132.99533299999996 },
-                    { lat: 34.050278, lng: 132.97472200000004 },
-                    { lat: 34.029472, lng: 132.97858299999996 },
-                    { lat: 34.013222, lng: 132.97763899999995 },
-                    { lat: 34.026056, lng: 133.02536099999998 },
-                    { lat: 33.837611, lng: 133.11097199999995 },
-                    { lat: 33.893528, lng: 133.10316699999998 },
-                    { lat: 33.897444, lng: 133.11505599999998 },
-                    { lat: 33.896139, lng: 133.12922200000003 },
-                    { lat: 33.890361, lng: 133.160528 },
-                    { lat: 33.966833, lng: 133.58647199999996 },
-                    { lat: 34.034778, lng: 133.72319400000003 },
-                    { lat: 34.102472, lng: 133.718889 },
-                    { lat: 34.134361, lng: 133.64727800000003 },
-                    { lat: 34.1345, lng: 133.64763900000003 },
-                    { lat: 34.139722, lng: 133.69413899999995 },
-                    { lat: 34.229944, lng: 133.72450000000003 },
-                    { lat: 34.223444, lng: 133.75016700000003 },
-                    { lat: 34.219278, lng: 133.75011100000006 },
-                    { lat: 34.233222, lng: 133.765806 },
-                    { lat: 34.225111, lng: 133.774139 },
-                    { lat: 34.250083, lng: 133.78097200000002 },
-                    { lat: 34.276806, lng: 133.76272199999994 },
-                    { lat: 34.306722, lng: 133.82463899999993 },
-                    { lat: 34.310944, lng: 133.88300000000004 },
-                    { lat: 34.303306, lng: 133.94425 },
-                    { lat: 34.33441700000001, lng: 133.927139 },
-                    { lat: 34.344417, lng: 133.96063900000001 },
-                    { lat: 34.286667, lng: 134.02655600000003 },
-                    { lat: 34.357806, lng: 134.10094400000003 },
-                    { lat: 34.359778, lng: 134.14013899999998 },
-                    { lat: 34.324333, lng: 134.179667 },
-                    { lat: 34.266806, lng: 134.17177800000002 },
-                    { lat: 34.190944, lng: 134.20713899999998 }];
+                    { lat: 34.159444, lng: 134.503, name: "霊山寺 (Ryouzenji)"},
+{ lat: 34.156028, lng: 134.49025000000006, name: "極楽寺 (Gokurakuji)"},
+{ lat: 34.147278, lng: 134.46827800000005, name: "金泉寺 (Konsenji)"},
+{ lat: 34.1515, lng: 134.43116699999996, name: "大日寺 (Dainichiji)"},
+{ lat: 34.137167, lng: 134.43236100000001, name: "地蔵寺 (Jizouji)"},
+{ lat: 34.118111, lng: 134.38836100000003, name: "安楽寺 (Anrakuji)"},
+{ lat: 34.120444, lng: 134.37830600000007, name: "十楽寺 (Juurakuji)"},
+{ lat: 34.122889, lng: 134.340056, name: "熊谷寺 (Kumadaniji)"},
+{ lat: 34.104222, lng: 134.33341700000005, name: "法輪寺 (Hourinji)"},
+{ lat: 34.10752800000001, lng: 134.30405599999995, name: "切幡寺 (Kirihataji)"},
+{ lat: 34.0515, lng: 134.348528, name: "藤井寺 (Fujiidera)"},
+{ lat: 33.984972, lng: 134.31063900000004, name: "焼山寺 (Shousanji)"},
+{ lat: 34.038222, lng: 134.462806, name: "大日寺 (Dainichiji)"},
+{ lat: 34.050333, lng: 134.47566699999993, name: "常楽寺 (Jourakuji)"},
+{ lat: 34.055778, lng: 134.473333, name: "国分寺 (Kokubunji)"},
+{ lat: 34.068528, lng: 134.47422200000005, name: "観音寺 (Kanonji)"},
+{ lat: 34.085194, lng: 134.485528, name: "井戸寺 (Idoji)"},
+{ lat: 33.986, lng: 134.57799999999997, name: "恩山寺 (Onzanji)"},
+{ lat: 33.967944, lng: 134.60649999999998, name: "立江寺 (Tatsueji)"},
+{ lat: 33.913806, lng: 134.505444, name: "鶴林寺 (Kakurinji)"},
+{ lat: 33.881861, lng: 134.520583, name: "太龍寺 (Tairyuuji)"},
+{ lat: 33.852194, lng: 134.58233300000006, name: "平等寺 (Byoudouji)"},
+{ lat: 33.732444, lng: 134.527472, name: "薬王寺 (Yakuouji)"},
+{ lat: 33.24925, lng: 134.17591700000003, name: "最御崎寺 (Hotsumisakiji)"},
+{ lat: 33.28825, lng: 134.14847199999997, name: "津照寺 (Shinshouji)"},
+{ lat: 33.30725, lng: 134.12258299999996, name: "金剛頂寺 (Kongouchouji)"},
+{ lat: 33.467639, lng: 133.97472200000004, name: "神峯寺 (Kounomineji)"},
+{ lat: 33.577778, lng: 133.705556, name: "大日寺 (Dainichiji)"},
+{ lat: 33.598889, lng: 133.64027799999997, name: "国分寺 (Kokubunji)"},
+{ lat: 33.591944, lng: 133.57788900000003, name: "善楽寺 (Zenrakuji)"},
+{ lat: 33.546639, lng: 133.57747199999994, name: "竹林寺 (Chikurinji)"},
+{ lat: 33.526694, lng: 133.61169399999994, name: "禅師峰寺 (Zenjibuji)"},
+{ lat: 33.500833, lng: 133.54305599999998, name: "雪蹊寺 (Sekkeiji)"},
+{ lat: 33.492056, lng: 133.48769400000003, name: "種間寺 (Tanemaji)"},
+{ lat: 33.512556, lng: 133.409361, name: "清瀧寺 (Kiyotakiji)"},
+{ lat: 33.426056, lng: 133.45108300000004, name: "青龍寺 (Shouryuuji)"},
+{ lat: 33.208111, lng: 133.13466700000004, name: "岩本寺 (Iwamotoji)"},
+{ lat: 32.726306, lng: 133.01850000000002, name: "金剛福寺 (Kongoufukuji)"},
+{ lat: 32.961194, lng: 132.774222, name: "延光寺 (Enkouji)"},
+{ lat: 32.964639, lng: 132.564167, name: "観自在寺 (Kanjizaiji)"},
+{ lat: 33.295222, lng: 132.59822199999996, name: "龍光寺 (Ryuukouji)"},
+{ lat: 33.310278, lng: 132.58219399999996, name: "佛木寺 (Butsumokuji)"},
+{ lat: 33.369083, lng: 132.51902799999993, name: "明石寺 (Meisekiji)"},
+{ lat: 33.661028, lng: 132.911583, name: "大寶寺 (Daihouji)"},
+{ lat: 33.659028, lng: 132.98125000000005, name: "岩屋寺 (Iwayaji)"},
+{ lat: 33.753556, lng: 132.81886099999997, name: "浄瑠璃寺 (Joururiji)"},
+{ lat: 33.758056, lng: 132.81302800000003, name: "八坂寺 (Yasakaji)"},
+{ lat: 33.793611, lng: 132.813667, name: "西林寺 (Sairinji)"},
+{ lat: 33.816806, lng: 132.80791699999997, name: "浄土寺 (Joudoji)"},
+{ lat: 33.827778, lng: 132.805028, name: "繁多寺 (Hantaji)"},
+{ lat: 33.847889, lng: 132.796472, name: "石手寺 (Ishiteji)"},
+{ lat: 33.885028, lng: 132.71502799999996, name: "太山寺 (Taisanji)"},
+{ lat: 33.891778, lng: 132.739694, name: "圓明寺 (Enmyouji)"},
+{ lat: 34.066833, lng: 132.96402799999998, name: "延命寺 (Enmeiji)"},
+{ lat: 34.06825, lng: 132.99533299999996, name: "南光坊 (Nankoubou)"},
+{ lat: 34.050278, lng: 132.97472200000004, name: "泰山寺 (Taisanji)"},
+{ lat: 34.029472, lng: 132.97858299999996, name: "栄福寺 (Eifukuji)"},
+{ lat: 34.013222, lng: 132.97763899999995, name: "仙遊寺 (Senyuuji)"},
+{ lat: 34.026056, lng: 133.02536099999998, name: "国分寺 (Kokubunji)"},
+{ lat: 33.837611, lng: 133.11097199999995, name: "横峰寺 (Yokomineji)"},
+{ lat: 33.893528, lng: 133.10316699999998, name: "香園寺 (Kouonji)"},
+{ lat: 33.897444, lng: 133.11505599999998, name: "宝寿寺 (Houjuji)"},
+{ lat: 33.896139, lng: 133.12922200000003, name: "吉祥寺 (Kichijouji)"},
+{ lat: 33.890361, lng: 133.160528, name: "前神寺 (Maegamiji)"},
+{ lat: 33.966833, lng: 133.58647199999996, name: "三角寺 (Sankakuji)"},
+{ lat: 34.034778, lng: 133.72319400000003, name: "雲辺寺 (Unpenji)"},
+{ lat: 34.102472, lng: 133.718889, name: "大興寺 (Daikouji)"},
+{ lat: 34.134361, lng: 133.64727800000003, name: "神恵院 (Jinnein)"},
+{ lat: 34.1345, lng: 133.64763900000003, name: "観音寺 (Kannonji)"},
+{ lat: 34.139722, lng: 133.69413899999995, name: "本山寺 (Motoyamaji)"},
+{ lat: 34.229944, lng: 133.72450000000003, name: "弥谷寺 (Iyadaniji)"},
+{ lat: 34.223444, lng: 133.75016700000003, name: "曼荼羅寺 (Mandaraji)"},
+{ lat: 34.219278, lng: 133.75011100000006, name: "出釈迦寺 (Shusshakaji)"},
+{ lat: 34.233222, lng: 133.765806, name: "甲山寺 (Kouyamaji)"},
+{ lat: 34.225111, lng: 133.774139, name: "善通寺 (Zentsuuji)"},
+{ lat: 34.250083, lng: 133.78097200000002, name: "金倉寺 (Konzouji)"},
+{ lat: 34.276806, lng: 133.76272199999994, name: "道隆寺 (Douryuuji)"},
+{ lat: 34.306722, lng: 133.82463899999993, name: "郷照寺 (Goushouji)"},
+{ lat: 34.310944, lng: 133.88300000000004, name: "天皇寺 (Tennouji)"},
+{ lat: 34.303306, lng: 133.94425, name: "國分寺 (Kokubunji)"},
+{ lat: 34.33441700000001, lng: 133.927139, name: "白峯寺 (Shiromineji)"},
+{ lat: 34.344417, lng: 133.96063900000001, name: "根香寺 (Negoroji)"},
+{ lat: 34.286667, lng: 134.02655600000003, name: "一宮寺 (Ichinomiyaji)"},
+{ lat: 34.357806, lng: 134.10094400000003, name: "屋島寺 (Yashimaji)"},
+{ lat: 34.359778, lng: 134.14013899999998, name: "八栗寺 (Yakuriji)"},
+{ lat: 34.324333, lng: 134.179667, name: "志度寺 (Shidoji)"},
+{ lat: 34.266806, lng: 134.17177800000002, name: "長尾寺 (Nagaoji)"},
+{ lat: 34.190944, lng: 134.20713899999998, name: "大窪寺 (Ookuboji)"}];
 
-                var middle = { lat: 33.749435, lng: 133.513672 };
+                var middle = { lat: 49.2749435, lng: -123.12 };
                 gMap = new google.maps.Map(document.getElementById('map'), {
                     zoom: 9,
                     center: middle
@@ -135,8 +135,7 @@
                     var marker = new google.maps.Marker({
                         position: path[i],
                         map: map,
-                        title: "Temple " + (i+1),
-
+                        title: path[i].name,
                         label: {
                             text: String(i + 1),
                             color: "white",
@@ -144,12 +143,10 @@
                             fontSize: "14px"
                         },
                         icon: {
-                            url: "https://henro92ab.blob.core.windows.net/storage/monk2.svg",
+                            url: "./monk2.svg",
                             anchor: new google.maps.Point(15, 15),
-                            labelOrigin: new google.maps.Point(15, 20),
-                            
+                            labelOrigin: new google.maps.Point(15, 20)
                         }
-
                     });
                 }
 
@@ -189,6 +186,23 @@
             }
         </script>
         <script>
+		
+		var rainbow = [
+				"#E51800",
+				"#E45F00",
+				"#E4A600",
+				"#DAE400",
+				"#92E300",
+				"#4AE300",
+				"#00E28A",
+				"#00E2D0",
+				"#00ACE2",
+				"#2700E1",
+				"#6D00E0",
+				"#B400E0",
+				"#E000C6",
+				"#E00080"
+				];
             $(document).ready(function () {
                 $.ajax({
                     url: "https://henro.azurewebsites.net/api/HenroGetCoords?code=CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw==",
@@ -204,7 +218,17 @@
                                 position: {lat: Number(resp[i].Latitude),lng: Number(resp[i].Longitude)},
                                 map: gMap,
                                 title: "Amelia " + i,
-                                label: String(i)
+                                label: String(i),
+								icon: {
+									    path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+										fillColor: rainbow[i % (rainbow.length + 1)],
+										fillOpacity: 1,
+										scale: 0.12,
+										strokeColor: 'black',
+										anchor: new google.maps.Point(125,125),
+										labelOrigin: new google.maps.Point(125, 125)
+
+                        }
                             });
 
                         }
@@ -229,5 +253,5 @@
         
     </div>
     <div style="text-align:center;font-weight:bold">Credits</div>
-    <div style="text-align:center">monk by Hea Poh Lin from the Noun Project</div>
+    <div style="text-align:center">monk image by Hea Poh Lin from the Noun Project</div>
 </body>
