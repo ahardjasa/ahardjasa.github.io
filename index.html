@@ -1,24 +1,220 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
- $.ajax({
-            url: "https://henro.azurewebsites.net/api/HenroGetCoords?code=CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw==",
-			dataType: "json",
-            type: "GET",
-            success: function (response) {
-                var resp = JSON.parse(response)
-                alert(resp.status);
-            },
-            error: function (xhr, status) {
-                alert("error");
-            }
-        });
-
-
-</script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Showing elevation along a path</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+    <div>
+        
+        <div id="map" style="height:900px;"></div>
+        <div id="elevation_chart"></div>
+        <script>
+            var gMap;
+            // Load the Visualization API and the columnchart package.
+            google.load('visualization', '1', { packages: ['columnchart'] });
+
+            function initMap() {
+                var path = [
+                    { lat: 34.159444, lng: 134.503 },
+                    { lat: 34.156028, lng: 134.49025000000006 },
+                    { lat: 34.147278, lng: 134.46827800000005 },
+                    { lat: 34.1515, lng: 134.43116699999996 },
+                    { lat: 34.137167, lng: 134.43236100000001 },
+                    { lat: 34.118111, lng: 134.38836100000003 },
+                    { lat: 34.120444, lng: 134.37830600000007 },
+                    { lat: 34.122889, lng: 134.340056 },
+                    { lat: 34.104222, lng: 134.33341700000005 },
+                    { lat: 34.10752800000001, lng: 134.30405599999995 },
+                    { lat: 34.0515, lng: 134.348528 },
+                    { lat: 33.984972, lng: 134.31063900000004 },
+                    { lat: 34.038222, lng: 134.462806 },
+                    { lat: 34.050333, lng: 134.47566699999993 },
+                    { lat: 34.055778, lng: 134.473333 },
+                    { lat: 34.068528, lng: 134.47422200000005 },
+                    { lat: 34.085194, lng: 134.485528 },
+                    { lat: 33.986, lng: 134.57799999999997 },
+                    { lat: 33.967944, lng: 134.60649999999998 },
+                    { lat: 33.913806, lng: 134.505444 },
+                    { lat: 33.881861, lng: 134.520583 },
+                    { lat: 33.852194, lng: 134.58233300000006 },
+                    { lat: 33.732444, lng: 134.527472 },
+                    { lat: 33.24925, lng: 134.17591700000003 },
+                    { lat: 33.28825, lng: 134.14847199999997 },
+                    { lat: 33.30725, lng: 134.12258299999996 },
+                    { lat: 33.467639, lng: 133.97472200000004 },
+                    { lat: 33.577778, lng: 133.705556 },
+                    { lat: 33.598889, lng: 133.64027799999997 },
+                    { lat: 33.591944, lng: 133.57788900000003 },
+                    { lat: 33.546639, lng: 133.57747199999994 },
+                    { lat: 33.526694, lng: 133.61169399999994 },
+                    { lat: 33.500833, lng: 133.54305599999998 },
+                    { lat: 33.492056, lng: 133.48769400000003 },
+                    { lat: 33.512556, lng: 133.409361 },
+                    { lat: 33.426056, lng: 133.45108300000004 },
+                    { lat: 33.208111, lng: 133.13466700000004 },
+                    { lat: 32.726306, lng: 133.01850000000002 },
+                    { lat: 32.961194, lng: 132.774222 },
+                    { lat: 32.964639, lng: 132.564167 },
+                    { lat: 33.295222, lng: 132.59822199999996 },
+                    { lat: 33.310278, lng: 132.58219399999996 },
+                    { lat: 33.369083, lng: 132.51902799999993 },
+                    { lat: 33.661028, lng: 132.911583 },
+                    { lat: 33.659028, lng: 132.98125000000005 },
+                    { lat: 33.753556, lng: 132.81886099999997 },
+                    { lat: 33.758056, lng: 132.81302800000003 },
+                    { lat: 33.793611, lng: 132.813667 },
+                    { lat: 33.816806, lng: 132.80791699999997 },
+                    { lat: 33.827778, lng: 132.805028 },
+                    { lat: 33.847889, lng: 132.796472 },
+                    { lat: 33.885028, lng: 132.71502799999996 },
+                    { lat: 33.891778, lng: 132.739694 },
+                    { lat: 34.066833, lng: 132.96402799999998 },
+                    { lat: 34.06825, lng: 132.99533299999996 },
+                    { lat: 34.050278, lng: 132.97472200000004 },
+                    { lat: 34.029472, lng: 132.97858299999996 },
+                    { lat: 34.013222, lng: 132.97763899999995 },
+                    { lat: 34.026056, lng: 133.02536099999998 },
+                    { lat: 33.837611, lng: 133.11097199999995 },
+                    { lat: 33.893528, lng: 133.10316699999998 },
+                    { lat: 33.897444, lng: 133.11505599999998 },
+                    { lat: 33.896139, lng: 133.12922200000003 },
+                    { lat: 33.890361, lng: 133.160528 },
+                    { lat: 33.966833, lng: 133.58647199999996 },
+                    { lat: 34.034778, lng: 133.72319400000003 },
+                    { lat: 34.102472, lng: 133.718889 },
+                    { lat: 34.134361, lng: 133.64727800000003 },
+                    { lat: 34.1345, lng: 133.64763900000003 },
+                    { lat: 34.139722, lng: 133.69413899999995 },
+                    { lat: 34.229944, lng: 133.72450000000003 },
+                    { lat: 34.223444, lng: 133.75016700000003 },
+                    { lat: 34.219278, lng: 133.75011100000006 },
+                    { lat: 34.233222, lng: 133.765806 },
+                    { lat: 34.225111, lng: 133.774139 },
+                    { lat: 34.250083, lng: 133.78097200000002 },
+                    { lat: 34.276806, lng: 133.76272199999994 },
+                    { lat: 34.306722, lng: 133.82463899999993 },
+                    { lat: 34.310944, lng: 133.88300000000004 },
+                    { lat: 34.303306, lng: 133.94425 },
+                    { lat: 34.33441700000001, lng: 133.927139 },
+                    { lat: 34.344417, lng: 133.96063900000001 },
+                    { lat: 34.286667, lng: 134.02655600000003 },
+                    { lat: 34.357806, lng: 134.10094400000003 },
+                    { lat: 34.359778, lng: 134.14013899999998 },
+                    { lat: 34.324333, lng: 134.179667 },
+                    { lat: 34.266806, lng: 134.17177800000002 },
+                    { lat: 34.190944, lng: 134.20713899999998 }];
+
+                var middle = { lat: 33.749435, lng: 133.513672 };
+                gMap = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 9,
+                    center: middle
+                });
+                var elevator = new google.maps.ElevationService;
+                displayPathElevation(path, elevator, gMap);
+            }
+
+            function displayPathElevation(path, elevator, map) {
+                for (var i = 0; i < path.length; i++) {
+                    var marker = new google.maps.Marker({
+                        position: path[i],
+                        map: map,
+                        title: "Temple " + i,
+                        label: String(i)
+
+                    });
+                }
+
+                elevator.getElevationForLocations({
+                    'locations': path
+                }, plotElevation);
+            }
+
+            function plotElevation(elevations, status) {
+                var chartDiv = document.getElementById('elevation_chart');
+                if (status !== 'OK') {
+                    // Show the error code inside the chartDiv.
+                    chartDiv.innerHTML = 'Cannot show elevation: request failed because ' +
+                        status;
+                    return;
+                }
+                // Create a new chart in the elevation_chart DIV.
+                var chart = new google.visualization.ColumnChart(chartDiv);
+
+                // Extract the data from which to populate the chart.
+                // Because the samples are equidistant, the 'Sample'
+                // column here does double duty as distance along the
+                // X axis.
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Sample');
+                data.addColumn('number', 'Elevation');
+                for (var i = 0; i < elevations.length; i++) {
+                    data.addRow(['', elevations[i].elevation]);
+                }
+
+                // Draw the chart using the data within its DIV.
+                chart.draw(data, {
+                    height: 150,
+                    legend: 'none',
+                    titleY: 'Elevation (m)'
+                });
+            }
+        </script>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "https://henro.azurewebsites.net/api/HenroGetCoords?code=CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw==",
+                    dataType: "json",
+                    type: "GET",
+                    success: function (response) {
+                        var resp = response;
+                        resp.sort(function (a, b) { return Number(a.RowKey) - Number(b.RowKey); });
+                        for (var i = 0; i < resp.length; i++) {
+                            resp[i].lat = Number(resp[i].Latitude);
+                            resp[i].lng = Number(resp[i].Longitude);
+                            var marker = new google.maps.Marker({
+                                position: {lat: Number(resp[i].Latitude),lng: Number(resp[i].Longitude)},
+                                map: gMap,
+                                title: "Amelia " + i,
+                                label: String(i)
+
+                            });
+
+                        }
+
+                        var polyline = new google.maps.Polyline({
+                            path: resp,
+                            map: gMap,
+                            strokeColor: '#000000',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 3
+                        })
+                    },
+                    error: function (xhr, status) {
+                        alert("error");
+                    }
+                });
+            });
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap">
+        </script>
+        
+    </div>
 </body>
-</html>
