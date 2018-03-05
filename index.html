@@ -5,6 +5,11 @@
     <meta charset="utf-8">
     <title>Amelia's Shikoku Henro Log</title>
     <style>
+		@media(max-width:767px){
+			.input-button{
+				padding: 0;
+			}
+		}
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
         #map {
@@ -16,7 +21,13 @@
             margin: 0;
             padding: 0;
         }
+		
+		.padded{
+			padding-bottom: 10px;
+			padding-top: 10px
+		}
     </style>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="markerclusterer.js"></script>
@@ -263,9 +274,19 @@
         </script>
 </head>
 <body>
-	<div>
-		<input type="password" id="passwordInput"/><button id="getPositionsButton">Retrieve</button> 
+	<div class="container">
+	<form>
+		<div class="row padded form-group">
+			<div class="col-9 col-sm-3 offset-sm-3 col-md-4 offset-md-3">
+				<input type="password" id="passwordInput" class="input-lg form-control" placeholder="Enter password"/> 
+			</div>
+			<div class="col-1 input-button">
+				<button id="getPositionsButton" class="btn btn-success">Retrieve</button>
+			</div>
+		</div>
+	</form>
 	</div>
+	
     <div>
         
         <div id="map" style="height:900px;"></div>
