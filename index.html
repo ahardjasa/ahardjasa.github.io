@@ -19,8 +19,10 @@
     </style>
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="markerclusterer.js"></script>
 	<script>
             var gMap;
+			var clusterer;
             // Load the Visualization API and the columnchart package.
             google.load('visualization', '1', { packages: ['columnchart'] });
 
@@ -115,7 +117,7 @@
                     { lat: 34.266806, lng: 134.17177800000002, name: "長尾寺 (Nagaoji)"},
                     { lat: 34.190944, lng: 134.20713899999998, name: "大窪寺 (Ookuboji)"}];
 
-                var middle = { lat: 49.2749435, lng: -123.12 };
+                var middle = { lat: 34.159444, lng: 134.503 };
                 gMap = new google.maps.Map(document.getElementById('map'), {
                     zoom: 9,
                     center: middle
@@ -124,7 +126,13 @@
                 displayPathElevation(path, elevator, gMap);
             }
 
+			function clusterTemples(map, markers)
+			{
+				clusterer = new MarkerClusterer(map, markers,{imagePath: ''});
+			}
+			
             function displayPathElevation(path, elevator, map) {
+				var markers = [];
                 for (var i = 0; i < path.length; i++) {
                     var marker = new google.maps.Marker({
                         position: path[i],
@@ -139,13 +147,15 @@
                         icon: {
                             url: "./monk2.svg",
                             anchor: new google.maps.Point(15, 15),
-                            labelOrigin: new google.maps.Point(15, 20)
+                            labelOrigin: new google.maps.Point(15, 20),
+							scaledSize: new google.maps.Size(32, 32)
                         },
 						clickable: false,
 						
                     });
+					markers.push(marker);
                 }
-
+				clusterTemples(map, markers);
                 elevator.getElevationForLocations({
                     'locations': path
                 }, plotElevation);
