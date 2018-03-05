@@ -6,8 +6,9 @@
     <title>Amelia's Shikoku Henro Log</title>
     <style>
 		@media(max-width:767px){
-			.input-button{
-				padding: 0;
+			#input-button{
+				padding-left: 0px;
+				margin-left:-10px;
 			}
 		}
         /* Always set the map height explicitly to define the size of the div
@@ -26,6 +27,13 @@
 			padding-bottom: 10px;
 			padding-top: 10px
 		}
+		
+		div.edgetoedge
+		{
+			margin-left:-30px;
+			margin-right:-30px;
+		}
+		
     </style>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://www.google.com/jsapi"></script>
@@ -275,28 +283,32 @@
 </head>
 <body>
 	<div class="container">
-	<form>
 		<div class="row padded form-group">
 			<div class="col-9 col-sm-3 offset-sm-3 col-md-4 offset-md-3">
 				<input type="password" id="passwordInput" class="input-lg form-control" placeholder="Enter password"/> 
 			</div>
-			<div class="col-1 input-button">
+			<div class="col-1" id="input-button">
 				<button id="getPositionsButton" class="btn btn-success">Retrieve</button>
 			</div>
 		</div>
-	</form>
+		
+		
+		<div class="row edgetoedge" >
+			
+			<div class="col-12 col-md-9">
+				<div id="map" style="height:900px;"></div>
+			</div>
+			
+			
+			
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div id="elevation_chart"></div>
+			</div>
+		</div>
 	</div>
-	
-    <div>
-        
-        <div id="map" style="height:900px;"></div>
-        <div id="elevation_chart"></div>
-        
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap">
-        </script>
-        
-    </div>
     <div style="text-align:center;font-weight:bold">Credits</div>
     <div style="text-align:center">monk image by Hea Poh Lin from the Noun Project</div>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap"></script>
 </body>
