@@ -35,7 +35,8 @@
 		}
 		
     </style>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity=
+"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="markerclusterer.js"></script>
@@ -230,7 +231,9 @@
 			var FetchData = function(passcode)
 			{
 				$.ajax({
-						url: "https://henro.azurewebsites.net/api/HenroGetCoords?code=CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw==" + "&" + "passcode=" + passcode,
+						url: 
+"https://henro.azurewebsites.net/api/HenroGetCoords?code=CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw=="
+ + "&" + "passcode=" + passcode,
 						dataType: "json",
 						type: "GET",
 						success: function (response) {
@@ -239,10 +242,13 @@
 							for (var i = 0; i < resp.length; i++) {
 								resp[i].lat = Number(resp[i].Latitude);
 								resp[i].lng = Number(resp[i].Longitude);
+								resp[i].note = resp[i].Annotation == null ? '' : decodeURIComponent(resp[i].Annotation.replace(/\+/g, '%20'));
+								resp[i].datetime = resp[i].Time == null ? '' : new Date(Date.parse(resp[i].Time))
+								resp[i].battery = Math.round(resp[i].Battery);
 								var marker = new google.maps.Marker({
-									position: {lat: Number(resp[i].Latitude),lng: Number(resp[i].Longitude)},
+									position: {lat: Number(resp[i].Latitude), lng: Number(resp[i].Longitude)},
 									map: gMap,
-									title: "Amelia " + i,
+									title: `${resp[i].datetime.toLocaleString('en-CA', {month: 'long', day: 'numeric', hour:'numeric', minute: 'numeric', timeZone: 'Asia/Tokyo'})}: ${resp[i].note} (${resp[i].battery}% battery)`,
 									label: String(i),
 									icon: {
 											path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
@@ -298,6 +304,27 @@
 			<div class="col-12 col-md-9">
 				<div id="map" style="height:900px;"></div>
 			</div>
+			<div class="col-3">
+				<table class="table">
+				  <thead>
+					<tr>
+					  <th scope="col">#</th>
+					  <th scope="col">Date</th>
+					  <th scope="col">Time</th>
+					  <th scope="col">Note</th>
+					</tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+					  <th scope="col"></th>
+					  <td></td>
+					  <td></td>
+					  <td></td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			
 			
 			
 			
@@ -310,5 +337,6 @@
 	</div>
     <div style="text-align:center;font-weight:bold">Credits</div>
     <div style="text-align:center">monk image by Hea Poh Lin from the Noun Project</div>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap"
+></script>
 </body>
