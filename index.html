@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Amelia's Shikoku Henro Log</title>
     <style>
-		@media(max-width:767px){
-			#input-button{
-				padding-left: 0px;
-				margin-left:-10px;
-			}
-		}
+        @media(max-width:767px) {
+            #input-button {
+                padding-left: 0px;
+                margin-left: -10px;
+            }
+        }
+
         /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
+
         #map {
             height: 100%;
         }
+
         /* Optional: Makes the sample page fill the window. */
-        html, body {
+
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
-		
-		.padded{
-			padding-bottom: 10px;
-			padding-top: 10px
-		}
-		
-		div.edgetoedge
-		{
-			margin-left:-30px;
-			margin-right:-30px;
-		}
-		
+
+        .padded {
+            padding-bottom: 10px;
+            padding-top: 10px
+        }
+
+        div.edgetoedge {
+            margin-left: -30px;
+            margin-right: -30px;
+        }
     </style>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity=
-"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="markerclusterer.js"></script>
@@ -310,6 +313,7 @@
 			});
         </script>
 </head>
+
 <body>
 	<div class="container">
 		<div class="row padded form-group">
@@ -352,6 +356,5 @@
 	</div>
     <div style="text-align:center;font-weight:bold">Credits</div>
     <div style="text-align:center">monk image by Hea Poh Lin from the Noun Project</div>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap"
-></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy0FuU3grIKsG0STZRmnxIhnMaxFwPIS8&callback=initMap"></script>
 </body>
