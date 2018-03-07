@@ -497,8 +497,8 @@
             ];
 
             var middle = {
-                lat: 34.159444,
-                lng: 134.503
+                lat: 33.8,
+                lng: 133.503
             };
             gMap = new google.maps.Map(document.getElementById('map'), {
                 zoom: 9,
@@ -563,7 +563,7 @@
             data.addColumn('string', 'Sample');
             data.addColumn('number', 'Elevation');
             for (var i = 0; i < elevations.length; i++) {
-                data.addRow(['', elevations[i].elevation]);
+                data.addRow(['第' + (i+1), elevations[i].elevation]);
             }
 
             // Draw the chart using the data within its DIV.
@@ -677,8 +677,8 @@
                 data: [],
                 order: [[0, 'desc']],
                 "lengthMenu": [
-                    [15, 50, -1],
-                    [15, 50, "All"]
+                    [10, 50, -1],
+                    [10, 50, "All"]
                 ],
 				"searching": false,
                 "columns": [{
@@ -733,7 +733,7 @@
         <div class="row edgetoedge">
 
             <div class="col-12 col-md-9">
-                <div id="map" style="height:900px;"></div>
+                <div id="map" style="height:700px;"></div>
             </div>
             <div class="col-3">
                 <table class="table" id="dataTable">
