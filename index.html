@@ -40,6 +40,8 @@
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="markerclusterer.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 	<script>
             var gMap;
 			var clusterer;
@@ -212,74 +214,95 @@
             }
 			
 			var rainbow = [
-				"#E51800",
-				"#E45F00",
-				"#E4A600",
-				"#DAE400",
-				"#92E300",
-				"#4AE300",
-				"#00E28A",
-				"#00E2D0",
-				"#00ACE2",
-				"#2700E1",
-				"#6D00E0",
-				"#B400E0",
-				"#E000C6",
-				"#E00080"
+				"#E51800", "#E45F00", "#E4A600", "#DAE400", "#92E300", "#4AE300", "#00E28A",
+				"#00E2D0", "#00ACE2", "#2700E1", "#6D00E0", "#B400E0", "#E000C6", "#E00080"
 				];
-				
+			
+			var points = new Set();
+			var polyline;
+			var fnkey = "CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw=="
+
 			var FetchData = function(passcode)
 			{
 				$.ajax({
-						url: 
-"https://henro.azurewebsites.net/api/HenroGetCoords?code=CBkD16Rc5jSe2hkWqdJlfYdxQrwuFa9xT/NSZF2tlDdSdLGWbZXAPw=="
- + "&" + "passcode=" + passcode,
+						url: `https://henro.azurewebsites.net/api/HenroGetCoords?code=${fnkey}&passcode=${passcode}`,
 						dataType: "json",
 						type: "GET",
 						success: function (response) {
-							var resp = response;
-							resp.sort(function (a, b) { return Number(a.RowKey) - Number(b.RowKey); });
-							for (var i = 0; i < resp.length; i++) {
-								resp[i].lat = Number(resp[i].Latitude);
-								resp[i].lng = Number(resp[i].Longitude);
-								resp[i].note = resp[i].Annotation == null ? '' : decodeURIComponent(resp[i].Annotation.replace(/\+/g, '%20'));
-								resp[i].datetime = resp[i].Time == null ? '' : new Date(Date.parse(resp[i].Time))
-								resp[i].battery = Math.round(resp[i].Battery);
+							RenderData(response);
+						},
+						error: function (xhr, status) {
+							alert("Error: " + status);
+						}
+					});
+			}
+			
+			var RenderData = function(data){
+							data.sort(function (a, b) { return Number(a.RowKey) - Number(b.RowKey); });
+							var dataTable = $("#dataTable").DataTable();
+							//var $table  =  $("<tbody></tbody>");
+							for (var i = 0; i < data.length; i++) {
+								data[i].lat = Number(data[i].Latitude);
+								data[i].lng = Number(data[i].Longitude);
+								data[i].note = data[i].Annotation == null ? '' : decodeURIComponent(data[i].Annotation.replace(/\+/g, '%20'));
+								data[i].datetime = data[i].Time == null ? '' : new Date(Date.parse(data[i].Time))
+								data[i].battery = Math.round(data[i].Battery);
+								if (!points.has(data[i].RowKey)){
+								points.add(data[i].RowKey)
 								var marker = new google.maps.Marker({
-									position: {lat: Number(resp[i].Latitude), lng: Number(resp[i].Longitude)},
+									position: {lat: data[i].lat, lng: data[i].lng},
 									map: gMap,
-									title: `${resp[i].datetime.toLocaleString('en-CA', {month: 'long', day: 'numeric', hour:'numeric', minute: 'numeric', timeZone: 'Asia/Tokyo'})}: ${resp[i].note} (${resp[i].battery}% battery)`,
+									title: `${data[i].datetime.toLocaleString('en-CA', {month: 'long', day: 'numeric', hour:'numeric', minute: 'numeric', timeZone: 'Asia/Tokyo'})}: ${data[i].note} (${data[i].battery}% battery)`,
 									label: String(i),
 									icon: {
 											path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-											fillColor: rainbow[i % (rainbow.length + 1)],
+											fillColor: rainbow[i % rainbow.length],
 											fillOpacity: 1,
 											scale: 0.12,
 											strokeColor: 'black',
 											anchor: new google.maps.Point(125,125),
 											labelOrigin: new google.maps.Point(125, 125)
-	
-							}
+									}
 								});
-	
+								dataTable.row.add({
+								"date": data[i].datetime.toLocaleString('en-CA', {month: 'long', day: 'numeric', timeZone: 'Asia/Tokyo'}), 
+								"time": data[i].datetime.toLocaleString('en-CA', {hour:'numeric', minute: 'numeric', timeZone: 'Asia/Tokyo'}), 
+								"note": data[i].note, "battery": data[i].battery});
+								//var $tr =  $('<tr></tr>');
+								//$tr.append($('<th scope="col"></td>').append(i));
+								//$tr.append($('<td></td>').append(data[i].datetime.toLocaleString('en-CA', {month: 'long', day: 'numeric', timeZone: 'Asia/Tokyo'})));
+								//$tr.append($('<td></td>').append(data[i].datetime.toLocaleString('en-CA', {hour: 'numeric', minute: 'numeric', timeZone: 'Asia/Tokyo'})));
+								//$tr.append($('<td></td>').append(data[i].note));
+								//$table.append($tr);
+								
+								}
 							}
-	
-							var polyline = new google.maps.Polyline({
-								path: resp,
+							if (typeof polyline == 'undefined') {
+								polyline = new google.maps.Polyline({
+								path: data,
 								map: gMap,
 								strokeColor: '#000000',
 								strokeOpacity: 1.0,
 								strokeWeight: 3
-							})
-						},
-						error: function (xhr, status) {
-							alert("error " + status);
-						}
-					});
+							}) } else {
+							polyline.setPath(data)
+							}
+							dataTable.draw();
+							
+							
+							
 			}
 			
 			$(document).ready(function(){
 				var retrieveButton = $("#getPositionsButton");
+				var dataTable = $('#dataTable').DataTable({
+					data: [],   
+					"columns": [
+					{ data: "date" },
+					{data: "time" } ,
+										{ data: "note" },
+						{ data: "battery" }
+					  ]});
 				retrieveButton.click(function(){
 					FetchData(document.getElementById("passwordInput").value);
 					retrieveButton.html("Refresh");
@@ -305,23 +328,15 @@
 				<div id="map" style="height:900px;"></div>
 			</div>
 			<div class="col-3">
-				<table class="table">
+				<table class="table" id="dataTable">
 				  <thead>
 					<tr>
-					  <th scope="col">#</th>
 					  <th scope="col">Date</th>
 					  <th scope="col">Time</th>
 					  <th scope="col">Note</th>
+					  <th scope="col">Battery</th>
 					</tr>
 				  </thead>
-				  <tbody>
-				    <tr>
-					  <th scope="col"></th>
-					  <td></td>
-					  <td></td>
-					  <td></td>
-				    </tr>
-				  </tbody>
 				</table>
 			</div>
 			
