@@ -48,6 +48,7 @@
     <script>
         var gMap;
         var clusterer;
+		var pathClusterer;
         // Load the Visualization API and the columnchart package.
         google.load('visualization', '1', {
             packages: ['columnchart']
@@ -617,6 +618,7 @@
                 fillOpacity: 1,
                 strokeWeight: 3
             };
+			var pathMarkers = [];
             for (var i = 0; i < data.length; i++) {
                 data[i].lat = Number(data[i].Latitude);
                 data[i].lng = Number(data[i].Longitude);
@@ -646,6 +648,7 @@
                         label: String(i),
                         icon: icon
                     });
+					pathMarkers.push(marker);
                     dataTable.row.add({
                         "datetime": data[i].datetime,
                         "altitude": Math.round(data[i].Altitude * 100) / 100,
@@ -666,7 +669,9 @@
             }
             dataTable.draw();
 
-
+			pathClusterer = new MarkerClusterer(gMap, markers, {
+                imagePath: ''
+            });
 
         }
 
